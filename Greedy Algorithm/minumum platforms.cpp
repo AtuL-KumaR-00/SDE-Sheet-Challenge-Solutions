@@ -55,4 +55,41 @@ int main()
         cout <<ob.findPlatform(arr, dep, n)<<endl;
     } 
    return 0;
+
 }  // } Driver Code Ends
+
+
+
+
+
+
+
+APPROACH 2:
+
+int calculateMinPatforms(int at[], int dt[], int n) {
+    int i=1,j=0;
+    int platform=1;
+    int ans=1;
+    
+    sort(at,at+n);
+    sort(dt,dt+n);
+    
+    while(i<n && j<n){
+        
+            if(at[i] <= dt[j])
+            {
+                platform++;  //one more platform needed
+//                 if(ans<platform)
+//                     ans=platform;
+                i++;
+            }
+            else{
+                platform--;   //one platform can be reduced
+                j++;
+            }
+        ans=max(ans,platform);  //updating the value with the current maximum
+            
+        }
+    return ans;
+    }
+    
