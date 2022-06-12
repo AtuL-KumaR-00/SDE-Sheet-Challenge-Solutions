@@ -18,3 +18,28 @@ vector<int> subsetSum(vector<int> &num)
     sort(ans.begin(),ans.end());
     return ans;
 }
+
+
+
+
+APPROACH 2:
+
+void subsum(int idx,int curr_sum,vector<int>&nums,vector<int>&ans){
+    if(idx==nums.size()){
+        ans.push_back(curr_sum);
+        return;
+    }
+    curr_sum+=nums[idx];
+    subsum(idx+1,curr_sum,nums,ans);
+    curr_sum-=nums[idx];
+    subsum(idx+1,curr_sum,nums,ans);
+}
+
+vector<int> subsetSum(vector<int> &num)
+{
+    // Write your code here.
+    vector<int> ans;
+    subsum(0,0,num, ans);
+    sort(ans.begin(),ans.end());
+    return ans;
+}
