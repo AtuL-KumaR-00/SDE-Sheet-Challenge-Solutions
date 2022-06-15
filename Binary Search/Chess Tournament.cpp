@@ -1,25 +1,21 @@
+#include<bits/stdc++.h>
 bool isSafe(int barrier,int n, vector<int>&pos, int c){
-    int dist=0,noOfPlayers=1;
-    for(int i=0;i<n;i++){
-        if(dist + pos[i]>barrier){
-            noOfPlayers++;
-            dist=pos[i];
+    int co_ordi=pos[0],noOfPlayer=1;
+    for(int i=1;i<n;i++){
+        if(pos[i]-co_ordi>=barrier){
+            noOfPlayer++;
+            co_ordi=pos[i];
         }
-        else dist+=pos[i];
+        if(noOfPlayer>=c)    return true;
     }
-    if(noOfPlayers<=c)    return true;
-    else return false;
+    return false;
 }
-
 int chessTournament(vector<int> positions , int n ,  int c){
-	// Write your code here
-    if(c>n) return -1;
-    int lo=INT_MAX;
-    int hi=0;
-    for(int i=0;i<n;i++){
-        lo=min(lo,positions[i]);
-        hi += positions[i];
-    }
+    // Write your code here
+    sort(positions.begin(),positions.end());
+    int lo=0;
+    int hi=positions[n-1]-positions[0];
+    
     int res=-1;
     while(lo<=hi){
         int mid=(hi+lo)/2;
