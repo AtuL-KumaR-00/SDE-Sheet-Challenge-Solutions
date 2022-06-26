@@ -24,3 +24,44 @@ vector<int> topologicalSort(vector<vector<int>> &edges, int v, int e)  {
     }
     return ans;
 }
+
+
+APPROACH 2:
+
+#include<bits/stdc++.h>
+void DFS(vector<int> adj[], int u,stack<int> &st, bool visited[]) 
+{     
+    visited[u]=true;
+    
+    for(int v:adj[u]){
+        if(visited[v]==false)
+            DFS(adj,v,st,visited);
+    }
+    st.push(u);
+}
+
+vector<int> topologicalSort(vector<vector<int>> &edges, int V, int e)  {
+    vector<int> ans;
+    bool visited[V]; 
+    for(int i = 0;i<V; i++) 
+        visited[i] = false;
+    stack<int> st;
+    vector<int> adj[V];
+    for(int i=0;i<edges.size();i++){
+        adj[edges[i][0]].push_back(edges[i][1]);
+    }
+    
+    for(int u=0;u<V;u++){
+        if(visited[u]==false){
+            DFS(adj,u,st,visited);
+        }
+    }
+    
+    while(st.empty()==false){
+        int u=st.top();
+        st.pop();
+        ans.push_back(u);
+        //cout<<u<<" ";
+    }
+    return ans;
+}
