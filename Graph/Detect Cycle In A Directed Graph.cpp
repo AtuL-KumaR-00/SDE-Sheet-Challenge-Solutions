@@ -32,3 +32,32 @@ int detectCycleInDirectedGraph(int n, vector < pair < int, int >> & edges) {
     }
     return 0;
 }
+
+APPROACH 2:
+
+#include<bits/stdc++.h>
+int detectCycleInDirectedGraph(int n, vector < pair < int, int >> & edges) {
+    int count=0;
+    vector<int> indegree(n+1,0);
+    vector<vector<int>> graph(n+1);
+    for(int i=0;i<edges.size();i++){
+        indegree[edges[i].second]++;
+        graph[edges[i].first].push_back(edges[i].second);
+    }
+    queue<int> q;
+    for(int i=1;i<n;i++){
+        if(indegree[i]==0)    q.push(i);
+    }
+    while(!q.empty()){
+        int node=q.front();
+        count++;
+        q.pop();
+        for(int child : graph[node]){
+            indegree[child]--;
+            if(indegree[child]==0)    
+                q.push(child);
+        }
+    }
+    if(count!=n)    return 1;
+    return 0;
+}
