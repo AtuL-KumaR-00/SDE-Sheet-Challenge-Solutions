@@ -22,3 +22,38 @@ int lcs(string s, string t)
     vector<vector<int>> dp(1001,vector<int>(1001,-1));
     return LCS(s,t,n,m,dp);
 }
+
+
+APPROACH 2:
+ 
+#include<bits/stdc++.h>
+
+
+int lcs(string s, string t)
+{
+    int n=s.size();
+    int m=t.size();
+    vector<vector<int>> dp(n+1,vector<int>(m+1,0));
+    int temp=0;
+    for(int i=0;i<n;i++){
+        if(s[i]==t[0])    temp=1;
+        dp[i][0]=temp;
+    }
+    temp=0;
+    for(int j=0;j<m;j++){
+        if(s[0]==t[j])    temp=1;
+        dp[0][j]=temp;
+    }
+    
+    for(int i=1;i<n;i++){
+        for(int j=1;j<m;j++){
+            if(s[i]==t[j]){
+                dp[i][j]=1+dp[i-1][j-1];
+            }
+            else{
+                dp[i][j]=max(dp[i-1][j],dp[i][j-1]);
+            }
+        }
+    }
+    return dp[n-1][m-1];
+}
